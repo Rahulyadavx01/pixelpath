@@ -1313,8 +1313,7 @@ export const mockFacultyAllowlist: FacultyAllowlistEntry[] = [
   { email: 'alan.vance@msot.edu', fullName: 'Prof. Alan Vance', department: 'Computer Science & Engineering', createdAt: '2026-08-01T00:00:00Z' },
   { email: 'sarah.connor@msot.edu', fullName: 'Dr. Sarah Connor', department: 'Artificial Intelligence & Data Science', createdAt: '2026-08-01T00:00:00Z' },
   { email: 'marcus.brody@msot.edu', fullName: 'Prof. Marcus Brody', department: 'Software Engineering', createdAt: '2026-08-01T00:00:00Z' },
-  { email: 'faculty@questify.edu', fullName: 'Prof. Questify Faculty', department: 'Computer Science & Engineering', createdAt: '2026-08-01T00:00:00Z' },
-  { email: 'faculty@pixelpath.edu', fullName: 'Prof. PixelPath Faculty', department: 'Computer Science & Engineering', createdAt: '2026-08-01T00:00:00Z' },
+  { email: 'elena.rostova@msot.edu', fullName: 'Dr. Elena Rostova', department: 'Cybersecurity & Systems', createdAt: '2026-08-01T00:00:00Z' },
   { email: 'faculty.demo@msot.edu', fullName: 'Prof. Demo Faculty', department: 'Computer Science & Engineering', createdAt: '2026-08-01T00:00:00Z' },
 ];
 

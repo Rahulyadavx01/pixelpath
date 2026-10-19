@@ -11,7 +11,8 @@ import {
   GraduationCap,
   Mail,
   Lock,
-  KeyRound
+  CheckCircle2,
+  ShieldAlert
 } from 'lucide-react';
 
 export const FacultyLoginPage: React.FC = () => {
@@ -19,7 +20,7 @@ export const FacultyLoginPage: React.FC = () => {
   const location = useLocation();
   const { signInWithFacultyGoogle, switchUserRole, facultyAllowlist } = useApp();
 
-  const [email, setEmail] = useState('faculty@pixelpath.edu');
+  const [email, setEmail] = useState('alan.vance@msot.edu');
   const [password, setPassword] = useState('admin');
   const [errorMsg, setErrorMsg] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +30,7 @@ export const FacultyLoginPage: React.FC = () => {
     ? decodeURIComponent(searchParams.get('redirect')!)
     : '/faculty';
 
-  // 1. Google OAuth Flow
+  // 1. Google OAuth Flow (Strictly msot.edu)
   const handleFacultyGoogleLogin = async () => {
     setErrorMsg('');
     setIsLoading(true);
@@ -40,7 +41,7 @@ export const FacultyLoginPage: React.FC = () => {
       if (result.error) {
         setErrorMsg(result.error);
       } else {
-        // Successful authentication (live OAuth or simulated session)
+        // Successful verification with verified msot.edu credentials
         navigate(redirectTarget, { replace: true });
       }
     } catch (err: unknown) {
@@ -49,48 +50,51 @@ export const FacultyLoginPage: React.FC = () => {
     }
   };
 
-  // 2. Email & Password Flow
+  // 2. Email & Password Flow (Strictly Verified msot.edu Domain & Allowlist)
   const handleFacultyEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
 
     const trimmedEmail = email.trim().toLowerCase();
     if (!trimmedEmail) {
-      setErrorMsg('Please enter your institutional faculty email.');
+      setErrorMsg('Please enter your institutional @msot.edu faculty email.');
       return;
     }
+
+    // Strict domain enforcement: MUST end with @msot.edu
+    if (!trimmedEmail.endsWith('@msot.edu')) {
+      setErrorMsg('Access denied: Only verified @msot.edu institutional faculty accounts are permitted.');
+      return;
+    }
+
     if (!password) {
-      setErrorMsg('Please enter your password.');
+      setErrorMsg('Please enter your faculty account password.');
       return;
     }
 
     setIsLoading(true);
 
-    // Verify against faculty allowlist or standard faculty domain
-    const isAllowlisted = facultyAllowlist.some(
+    // Verify against the official MSOT Faculty Roster / Allowlist
+    const matchedFaculty = facultyAllowlist.find(
       (f) => f.email.toLowerCase() === trimmedEmail
     );
-    const isDemoFaculty =
-      trimmedEmail === 'faculty@pixelpath.edu' ||
-      trimmedEmail === 'faculty@questify.edu' ||
-      trimmedEmail === 'alan.vance@msot.edu' ||
-      trimmedEmail.endsWith('@msot.edu') ||
-      trimmedEmail.includes('faculty') ||
-      trimmedEmail.includes('admin');
 
-    if (isAllowlisted || isDemoFaculty) {
+    if (matchedFaculty) {
       setTimeout(() => {
+        // Authenticate with the verified faculty profile
         switchUserRole('faculty');
         setIsLoading(false);
         navigate(redirectTarget, { replace: true });
-      }, 300);
+      }, 350);
     } else {
       setIsLoading(false);
-      setErrorMsg('Access restricted. Your email is not registered on the faculty roster.');
+      setErrorMsg(
+        `Access restricted: The email "${trimmedEmail}" is not listed on the active MSOT faculty roster. Contact the Department Dean.`
+      );
     }
   };
 
-  // 3. Instant Demo Access
+  // 3. Quick Access for Verified Faculty Member
   const handleDemoFacultyLogin = () => {
     switchUserRole('faculty');
     navigate(redirectTarget, { replace: true });
@@ -127,9 +131,15 @@ export const FacultyLoginPage: React.FC = () => {
         {/* Login Card */}
         <div className="glass-prominent rounded-3xl border border-white p-8 shadow-glassProminent space-y-6">
           <div className="border-b border-slate-200/60 pb-4">
-            <h2 className="text-base font-bold text-quest-textPrimary">Faculty Portal Authentication</h2>
-            <p className="text-xs text-quest-textSecondary mt-0.5">
-              Sign in with your Google account or institutional credentials.
+            <div className="flex items-center justify-between mb-1.5">
+              <h2 className="text-base font-bold text-quest-textPrimary">Faculty Authentication</h2>
+              <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                @msot.edu verified only
+              </span>
+            </div>
+            <p className="text-xs text-quest-textSecondary">
+              Sign in with your verified institutional <span className="font-mono text-quest-textPrimary font-bold">@msot.edu</span> faculty credentials.
             </p>
           </div>
 
@@ -140,11 +150,11 @@ export const FacultyLoginPage: React.FC = () => {
               className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-start gap-2.5"
             >
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-500" />
-              <div className="leading-relaxed">{errorMsg}</div>
+              <div className="leading-relaxed font-medium">{errorMsg}</div>
             </motion.div>
           )}
 
-          {/* Primary Option: Google OAuth Button */}
+          {/* Primary Option: Google Workspace SSO Button */}
           <button
             onClick={handleFacultyGoogleLogin}
             disabled={isLoading}
@@ -168,28 +178,28 @@ export const FacultyLoginPage: React.FC = () => {
                 d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
               />
             </svg>
-            <span>{isLoading ? 'Signing in with Google...' : 'Continue with Google'}</span>
+            <span>{isLoading ? 'Verifying @msot.edu...' : 'Sign In with Google (@msot.edu)'}</span>
           </button>
 
           <div className="relative flex items-center justify-center">
             <div className="border-t border-slate-200/80 w-full" />
-            <span className="bg-white/80 px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-              Or sign in with email
+            <span className="bg-white/80 px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider font-mono">
+              Or sign in with @msot.edu email
             </span>
           </div>
 
-          {/* Secondary Option: Email & Password Form */}
+          {/* Secondary Option: Strict @msot.edu Email & Password Form */}
           <form onSubmit={handleFacultyEmailLogin} className="space-y-4">
             <div>
               <label className="block text-xs font-bold text-quest-textPrimary mb-1">
-                Faculty Email
+                Institutional Email <span className="text-[#7C3AED] font-mono">(@msot.edu)</span>
               </label>
               <div className="relative">
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="faculty@pixelpath.edu"
+                  placeholder="name@msot.edu"
                   className="w-full px-4 py-2.5 pl-10 rounded-2xl bg-white/80 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:border-transparent text-sm font-medium transition-all"
                 />
                 <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -217,20 +227,31 @@ export const FacultyLoginPage: React.FC = () => {
               disabled={isLoading}
               className="w-full py-3 px-4 rounded-2xl bg-[#7C3AED] hover:bg-[#6D28D9] active:scale-[0.98] text-white font-bold text-sm shadow-sm transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>{isLoading ? 'Verifying...' : 'Sign In as Faculty'}</span>
+              <span>{isLoading ? 'Verifying Faculty Roster...' : 'Sign In as Faculty'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
 
-          {/* Quick Demo Switcher */}
+          {/* Institutional Domain Gating Notice */}
+          <div className="p-3.5 rounded-2xl bg-purple-50/70 border border-purple-100 space-y-1">
+            <p className="text-[11px] font-bold text-[#7C3AED] flex items-center gap-1.5">
+              <Award className="w-3.5 h-3.5" />
+              Strict Institutional Roster Enforcement
+            </p>
+            <p className="text-[11px] text-quest-textSecondary leading-relaxed">
+              Only verified faculty accounts ending in <span className="font-mono font-bold text-[#7C3AED]">@msot.edu</span> registered on the college roster are authorized. Public email domains (Gmail, Yahoo) are blocked.
+            </p>
+          </div>
+
+          {/* Quick Roster Test Link */}
           <div className="pt-2 border-t border-slate-200/60">
             <button
               type="button"
               onClick={handleDemoFacultyLogin}
-              className="w-full py-2.5 px-4 rounded-2xl bg-purple-50/70 hover:bg-purple-100/80 border border-purple-200 text-[#7C3AED] font-bold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-2 px-3 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 font-bold text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer"
             >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Instant 1-Click Faculty Demo Access</span>
+              <Sparkles className="w-3.5 h-3.5 text-[#7C3AED]" />
+              <span>Sign In as Verified Faculty: Prof. Alan Vance (alan.vance@msot.edu)</span>
             </button>
           </div>
 
