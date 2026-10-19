@@ -114,7 +114,7 @@ export const LoginPage: React.FC = () => {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-black tracking-tight text-quest-textPrimary">QUESTIFY</h1>
+            <h1 className="text-2xl font-black tracking-tight text-quest-textPrimary">PIXELPATH</h1>
             <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-sky-100 text-quest-skyDark border border-sky-200 font-mono">
               STUDENT
             </span>
@@ -218,7 +218,7 @@ export const LoginPage: React.FC = () => {
               disabled={isLoading}
               className="w-full py-3 px-4 rounded-2xl bg-quest-sky hover:brightness-105 active:scale-[0.98] text-white font-bold text-sm shadow-glassSubtle transition-all disabled:opacity-50 flex items-center justify-center gap-2 mt-2 cursor-pointer disabled:cursor-not-allowed"
             >
-              <span>{isLoading ? 'Authenticating...' : 'Sign In to Questify'}</span>
+              <span>{isLoading ? 'Authenticating...' : 'Sign In to PixelPath'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>

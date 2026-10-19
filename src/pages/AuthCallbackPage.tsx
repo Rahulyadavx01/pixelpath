@@ -135,7 +135,7 @@ export const AuthCallbackPage: React.FC = () => {
             className="w-full h-11 px-4 rounded-2xl bg-white border border-[#F1E5E9] text-[#24324B] text-xs font-bold hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
           >
             <ArrowLeft className="w-4 h-4 text-[#64748B]" />
-            <span>Return to Questify</span>
+            <span>Return to PixelPath</span>
           </button>
         </div>
       </div>

@@ -59,7 +59,7 @@ export const FacultySidebar: React.FC = () => {
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-base tracking-tight text-quest-textPrimary">QUESTIFY</span>
+                <span className="font-extrabold text-base tracking-tight text-quest-textPrimary">PIXELPATH</span>
                 <span className="text-[9px] uppercase px-1.5 py-0.5 rounded-full font-bold bg-sky-100 text-quest-skyDark border border-sky-200 font-mono">
                   FACULTY
                 </span>

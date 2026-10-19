@@ -135,7 +135,7 @@ export const ActivationModal: React.FC<ActivationModalProps> = ({
               <span className="text-xs text-[#64748B]">Roster Verification</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-black text-[#24324B]">
-              Activate Your Questify Account
+              Activate Your PixelPath Account
             </h2>
             <p className="text-xs text-[#64748B] mt-1 leading-relaxed">
               Verify your official Student ID on the college roster to set your permanent credentials.
@@ -272,7 +272,7 @@ export const ActivationModal: React.FC<ActivationModalProps> = ({
               <div>
                 <h3 className="text-xl font-black text-[#24324B]">Account Activated!</h3>
                 <p className="text-xs text-[#64748B] mt-1">
-                  Welcome to Questify, {rosterData?.fullName}. Signing you into your dashboard...
+                  Welcome to PixelPath, {rosterData?.fullName}. Signing you into your dashboard...
                 </p>
               </div>
             </div>

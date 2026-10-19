@@ -24,7 +24,7 @@ const curriculumAuditLogs = [];
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
-    service: 'questify-compiler-and-curriculum-engine',
+    service: 'pixelpath-compiler-and-curriculum-engine',
     timestamp: new Date().toISOString(),
     supportedLanguages: ['cpp', 'python', 'javascript', 'java'],
   });

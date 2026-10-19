@@ -91,7 +91,7 @@ export const Sidebar: React.FC = () => {
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-base tracking-tight text-ink">QUESTIFY</span>
+                <span className="font-extrabold text-base tracking-tight text-ink">PIXELPATH</span>
                 <span className="inline-flex h-[20px] items-center rounded-badge border border-[#D9DDFF] bg-brand-tint px-2 text-[10px] font-bold text-brand-ink font-mono">
                   STUDENT
                 </span>

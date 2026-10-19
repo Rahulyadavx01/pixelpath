@@ -40,7 +40,7 @@ export const StudentLayout: React.FC = () => {
             </span>
             <span className="font-mono text-[10px] text-brand-ink flex items-center gap-1">
               <Sparkles className="w-3 h-3" />
-              QUESTIFY Engine
+              PIXELPATH Engine
             </span>
           </div>
         </div>

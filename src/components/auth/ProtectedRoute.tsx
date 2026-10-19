@@ -25,7 +25,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
           </div>
         </div>
         <div className="text-center">
-          <p className="text-xs font-black uppercase tracking-widest text-[#24324B]">QUESTIFY</p>
+          <p className="text-xs font-black uppercase tracking-widest text-[#24324B]">PIXELPATH</p>
           <p className="text-[11px] text-[#64748B] mt-0.5">Authenticating student session...</p>
         </div>
       </div>

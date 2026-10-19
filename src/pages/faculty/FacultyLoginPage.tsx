@@ -59,7 +59,7 @@ export const FacultyLoginPage: React.FC = () => {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-black tracking-tight text-quest-textPrimary">QUESTIFY</h1>
+            <h1 className="text-2xl font-black tracking-tight text-quest-textPrimary">PIXELPATH</h1>
             <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-sky-100 text-quest-skyDark border border-sky-200 font-mono">
               FACULTY
             </span>
