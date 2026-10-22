@@ -9,7 +9,7 @@ interface RoleRouteProps {
 }
 
 export const RoleRoute: React.FC<RoleRouteProps> = ({ children, allowedRole }) => {
-  const { user, isAuthLoading } = useApp();
+  const { user, isAuthLoading, isAuthenticated } = useApp();
   const location = useLocation();
 
   if (isAuthLoading) {
@@ -28,7 +28,7 @@ export const RoleRoute: React.FC<RoleRouteProps> = ({ children, allowedRole }) =
   }
 
   // Not signed in
-  if (!user || !user.id) {
+  if (!isAuthenticated || !user || !user.id) {
     const redirectParam = encodeURIComponent(location.pathname + location.search);
     if (allowedRole === 'faculty') {
       return <Navigate to={`/faculty/login?redirect=${redirectParam}`} replace />;

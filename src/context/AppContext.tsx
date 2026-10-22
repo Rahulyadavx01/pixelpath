@@ -100,6 +100,7 @@ interface ToastNotice {
 
 interface AppContextType {
   user: UserProfile;
+  isAuthenticated: boolean;
   roster: RosterStudent[];
   xpActivities: XpActivity[];
   xpTransactions: XpTransaction[];
@@ -284,6 +285,10 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    return localStorage.getItem('pixelpath_authenticated') === 'true';
+  });
+
   const [user, setUser] = useState<UserProfile>(() => {
     const saved = localStorage.getItem('questify_user');
     if (saved) {
@@ -996,6 +1001,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       message: `Welcome, ${match?.fullName || cleanId}! Your password has been established.`,
     });
 
+    setIsAuthenticated(true);
+    localStorage.setItem('pixelpath_authenticated', 'true');
+
     return { success: true };
   };
 
@@ -1080,6 +1088,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           message: `Authenticated as ${cleanId}`,
         });
 
+        setIsAuthenticated(true);
+        localStorage.setItem('pixelpath_authenticated', 'true');
+
         return { success: true };
       } catch {
         recordFailedAttempt(cleanId);
@@ -1136,6 +1147,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       title: 'Welcome Back!',
       message: `Signed in as ${found.fullName} (${cleanId})`,
     });
+
+    setIsAuthenticated(true);
+    localStorage.setItem('pixelpath_authenticated', 'true');
 
     return { success: true };
   };
@@ -1306,6 +1320,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (isSupabaseActive && supabase) {
       await supabase.auth.signOut();
     }
+    setIsAuthenticated(false);
+    localStorage.removeItem('pixelpath_authenticated');
+    localStorage.removeItem('questify_user');
     setUser(initialUser);
     setQuizAttempt(null);
     localStorage.removeItem('questify_quiz_attempt');
@@ -1318,6 +1335,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Switch role for reviewer testing
   const switchUserRole = (role: UserRole) => {
+    setIsAuthenticated(true);
+    localStorage.setItem('pixelpath_authenticated', 'true');
     if (role === 'faculty') {
       setUser(facultyUser);
       addToast({
@@ -1370,6 +1389,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       return {};
     } else {
       // Demo simulation
+      setIsAuthenticated(true);
+      localStorage.setItem('pixelpath_authenticated', 'true');
       setUser(facultyUser);
       addToast({
         type: 'success',
@@ -3698,6 +3719,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     <AppContext.Provider
       value={{
         user,
+        isAuthenticated,
         roster,
         xpActivities,
         xpTransactions,

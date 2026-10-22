@@ -12,7 +12,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   requireFaculty = false,
 }) => {
-  const { user, isAuthLoading } = useApp();
+  const { user, isAuthLoading, isAuthenticated } = useApp();
   const location = useLocation();
 
   // Show branded loading screen while checking auth session
@@ -33,7 +33,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }
 
   // Not signed in -> redirect to /login preserving target URL
-  if (!user || !user.id) {
+  if (!isAuthenticated || !user || !user.id) {
     const redirectUrl = encodeURIComponent(location.pathname + location.search);
     return <Navigate to={`/login?redirect=${redirectUrl}`} replace />;
   }

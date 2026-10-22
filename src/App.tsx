@@ -62,10 +62,11 @@ export const App: React.FC = () => {
     <AppProvider>
       <BrowserRouter>
         <Routes>
-          {/* Public Authentication & Landing Routes */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/faculty/login" element={<FacultyLoginPage />} />
+          {/* Authentication & Entry Routes: Root directly presents the Login Interface */}
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage defaultRole="student" />} />
+          <Route path="/faculty/login" element={<LoginPage defaultRole="faculty" />} />
+          <Route path="/landing" element={<LandingPage />} />
           <Route path="/auth/callback" element={<AuthCallbackPage />} />
 
           {/* Student Portal Shell (Role Protected) */}
