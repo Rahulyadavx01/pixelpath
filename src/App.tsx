@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import { AppProvider } from './context/AppContext';
 import { RoleRoute } from './components/auth/RoleRoute';
 import { StudentLayout } from './components/layout/StudentLayout';
@@ -61,6 +62,7 @@ export const App: React.FC = () => {
   return (
     <AppProvider>
       <BrowserRouter>
+        <Analytics />
         <Routes>
           {/* Public Authentication & Landing Routes */}
           <Route path="/" element={<LandingPage />} />
