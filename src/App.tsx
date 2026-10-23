@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { AppProvider } from './context/AppContext';
 import { RoleRoute } from './components/auth/RoleRoute';
 import { StudentLayout } from './components/layout/StudentLayout';
@@ -63,6 +64,7 @@ export const App: React.FC = () => {
     <AppProvider>
       <BrowserRouter>
         <Analytics />
+        <SpeedInsights />
         <Routes>
           {/* Authentication & Entry Routes: Root directly presents the Login Interface */}
           <Route path="/" element={<LoginPage />} />
